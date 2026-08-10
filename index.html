@@ -586,6 +586,125 @@
             transform: scale(0.9);
         }
 
+        /* История */
+        .history-section {
+            margin-top: 16px;
+            border-top: 1px solid rgba(224,197,143,0.06);
+            padding-top: 16px;
+            transition: opacity 0.5s ease, max-height 0.6s ease, padding 0.5s ease, margin 0.5s ease, border 0.5s ease;
+            max-height: 600px;
+            overflow: hidden;
+        }
+        .history-section.hidden { 
+            opacity: 0;
+            max-height: 0;
+            padding-top: 0;
+            margin-top: 0;
+            border-top: none;
+            pointer-events: none;
+        }
+        .history-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.8rem;
+            color: rgba(224,197,143,0.4);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .history-title:hover { color: rgba(224,197,143,0.6); }
+        .history-clear-btn {
+            background: none;
+            border: none;
+            color: rgba(224,197,143,0.2);
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .history-clear-btn:hover { 
+            color: #ff6b6b; 
+            background: rgba(255,107,107,0.1);
+        }
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 4px;
+            transition: opacity 0.5s ease, max-height 0.6s ease;
+        }
+        .history-list.hidden {
+            opacity: 0;
+            max-height: 0;
+            pointer-events: none;
+            overflow: hidden;
+            padding-right: 0;
+        }
+        .history-list::-webkit-scrollbar {
+            width: 3px;
+        }
+        .history-list::-webkit-scrollbar-track {
+            background: rgba(224,197,143,0.04);
+            border-radius: 10px;
+        }
+        .history-list::-webkit-scrollbar-thumb {
+            background: rgba(224,197,143,0.2);
+            border-radius: 10px;
+        }
+        .history-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(224,197,143,0.3);
+        }
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 12px;
+            background: rgba(17,34,80,0.10);
+            border-radius: 10px;
+            border: 1px solid rgba(224,197,143,0.03);
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-size: 0.8rem;
+            animation: itemSlideIn 0.3s ease;
+        }
+        .history-item:hover {
+            background: rgba(17,34,80,0.20);
+            border-color: rgba(224,197,143,0.08);
+            transform: translateX(3px);
+        }
+        .history-item .h-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            flex: 1;
+            min-width: 0;
+        }
+        .history-item .h-rarity {
+            color: #e0c58f;
+            font-weight: 500;
+            font-size: 0.75rem;
+        }
+        .history-item .h-desc {
+            color: rgba(245,240,233,0.4);
+            font-size: 0.7rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .history-item .h-time {
+            color: rgba(245,240,233,0.2);
+            font-size: 0.6rem;
+            white-space: nowrap;
+            margin-left: 8px;
+        }
+
         @media (max-width: 600px) {
             .container { 
                 padding: 24px 20px 32px; 
@@ -601,6 +720,8 @@
             .filter-group .custom-check { width: 28px; height: 28px; }
             .class-filter-group .custom-class-check { width: 24px; height: 24px; }
             .favorite-item { flex-wrap: wrap; gap: 8px; }
+            .history-item { flex-wrap: wrap; gap: 4px; }
+            .history-item .h-time { margin-left: 0; }
         }
     </style>
 </head>
@@ -647,6 +768,7 @@
                 <div class="guide-divider"></div>
 
                 <p><strong>Сохранение</strong> — нажмите на ★ рядом с результатом, чтобы добавить персонажа в избранное. Сохранённые персонажи доступны в разделе «Сохранённые персонажи» под результатом.</p>
+                <p style="margin-top: 4px;"><strong>История</strong> — все сгенерированные персонажи сохраняются в истории. Нажмите на любой результат в истории, чтобы загрузить его.</p>
             </div>
         </div>
 
@@ -713,6 +835,13 @@
                 <div class="favorites-title" id="favoritesToggle">✦ Сохранённые персонажи</div>
                 <div class="favorites-list hidden" id="favoritesList"></div>
             </div>
+            <div class="history-section hidden" id="historySection">
+                <div class="history-title" id="historyToggle">
+                    <span>✦ История генераций</span>
+                    <button class="history-clear-btn" id="clearHistoryBtn">Очистить</button>
+                </div>
+                <div class="history-list hidden" id="historyList"></div>
+            </div>
         </div>
     </div>
 
@@ -729,7 +858,8 @@
             MISSING_FORM_CHANCE: 0.03,
             MARKINGS_NONE_CHANCE: 0.30,
             MARKINGS_TWO_CHANCE: 0.50,
-            LOCATION_STATUS_CHANCE: 0.45
+            LOCATION_STATUS_CHANCE: 0.45,
+            MAX_HISTORY: 50
         };
 
         function rand() {
@@ -936,10 +1066,9 @@
         };
 
         // ================================================================
-        //  ДАРЫ И ИСКАЖЕНИЯ — ОБНОВЛЁННЫЙ СПИСОК
+        //  ДАРЫ И ИСКАЖЕНИЯ
         // ================================================================
 
-        // ОБЩИЕ (могут быть и Дарами, и Искажениями)
         const COMMON_GIFTS = [
             'Одна из сенсорных систем (обоняние, эхолокация, зрение и др.) идентичны облику',
             'Способен частично обращаться, но это компенсировано некими тяжелыми ограничениями',
@@ -948,7 +1077,6 @@
             'Некие физические показатели идентичны облику (например, концентрация кислорода в крови)'
         ];
 
-        // ЧИСТЫЕ ДАРЫ
         const PURE_GIFTS = [
             'Лорный дар: предводитель или избранный',
             'Дар, связанный с пониманием или имитацией речи облика',
@@ -958,7 +1086,6 @@
             'Не восприимчив к некой типичной слабости ликанов (например, серебро или лунный цикл)'
         ];
 
-        // ЧИСТЫЕ ИСКАЖЕНИЯ
         const PURE_CORRUPTIONS = [
             'Не способен поддерживать обращение в определенных условиях',
             'Лорное искажение: обращение искажено из-за проклятия, болезни или травмы',
@@ -967,17 +1094,8 @@
             'Одна из естественных функций мозга нарушена, поскольку идентична облику (например, понимание кошачьей речи, восприятие пространства)'
         ];
 
-        // ПОЛНЫЙ СПИСОК ДАРОВ
-        const GIFTS = [
-            ...COMMON_GIFTS,
-            ...PURE_GIFTS
-        ];
-
-        // ПОЛНЫЙ СПИСОК ИСКАЖЕНИЙ
-        const CORRUPTIONS = [
-            ...COMMON_GIFTS,
-            ...PURE_CORRUPTIONS
-        ];
+        const GIFTS = [...COMMON_GIFTS, ...PURE_GIFTS];
+        const CORRUPTIONS = [...COMMON_GIFTS, ...PURE_CORRUPTIONS];
 
         // ================================================================
         //  АРХЕТИПЫ
@@ -1049,7 +1167,7 @@
         };
 
         // ================================================================
-        //  ОСОБЫЕ ПРИМЕТЫ — ИСПРАВЛЕННЫЕ ЗАГЛАВНЫЕ БУКВЫ
+        //  ОСОБЫЕ ПРИМЕТЫ
         // ================================================================
 
         const MARKING_EXCLUSIONS = {
@@ -1211,6 +1329,7 @@
             'Лишен ликантропии в юности'
         ];
 
+        // ❌ Региональные приметы УБРАНЫ из основного массива
         const LOCATION_MARKINGS = {
             'Киевская Русь': ['Бусины в шерсти', 'Живет в людской избе'],
             'Империя Мин': ['Любит чай'],
@@ -1259,7 +1378,6 @@
         //  ОБЛИКИ
         // ================================================================
 
-        // БОЛЬШИЕ СЕМЕЙСТВА
         const GIANT_FAMILIES = new Set([
             'Слоновые (Elephantidae)',
             'Бегемотовые (Hippopotamidae)',
@@ -1282,9 +1400,7 @@
             'Галапагосские черепахи (Testudinidae)'
         ]);
 
-        // МАЛЕНЬКИЕ СЕМЕЙСТВА
         const SMALL_FAMILIES = new Set([
-            // Насекомые
             'Жесткокрылые (жуки) (Coleoptera)',
             'Чешуекрылые (бабочки) (Lepidoptera)',
             'Паукообразные (Arachnida)',
@@ -1293,14 +1409,8 @@
             'Прямокрылые (Orthoptera)',
             'Стрекозы (Odonata)',
             'Скорпионы (Scorpiones)',
-            
-            // Моллюски
             'Брюхоногие (Gastropoda)',
-            
-            // Черви
             'Кольчатые черви (Annelida)',
-            
-            // Ракообразные
             'Ракообразные (Crustacea)'
         ]);
 
@@ -2593,7 +2703,7 @@
         }
 
         // ================================================================
-        //  ПРИМЕТЫ (ИСПРАВЛЕННАЯ ЛОГИКА РЕГИОНАЛЬНЫХ ПРИМЕТ)
+        //  ПРИМЕТЫ
         // ================================================================
 
         function generateMarkings(form, rarityKey, location) {
@@ -2668,106 +2778,115 @@
         }
 
         // ================================================================
-        //  ГЕНЕРАЦИЯ ПЕРСОНАЖА
+        //  ИСТОРИЯ
         // ================================================================
 
-        function generateLycan(rarityKey, activeFilters) {
-            const meta = RARITY_META[rarityKey];
-            if (!meta) return null;
-
-            let pool;
-            let location;
-
-            if (rarityKey === 'exotic_beast' && rand() < 0.1) {
-                location = randomItem(LOCATIONS.isolated);
-            } else {
-                pool = (meta.loc === 'all') ? LOCATIONS.all : LOCATIONS[meta.loc];
-                location = randomItem(pool);
+        function getHistory() {
+            try {
+                const raw = localStorage.getItem('lycan_history');
+                if (!raw) return [];
+                const parsed = JSON.parse(raw);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (e) {
+                console.warn('Не удалось прочитать историю:', e);
+                return [];
             }
+        }
 
-            let hasGiantGift = false;
-            let hasSmallGift = false;
-            let giftData = null;
-
-            const willBeChimera = rand() < CONFIG.CHIMERA_CHANCE;
-
-            if (!willBeChimera) {
-                giftData = getGiftOrCorruption(rarityKey, true, true);
-            } else {
-                giftData = getGiftOrCorruption(rarityKey, false, false);
+        function saveHistory(history) {
+            try {
+                localStorage.setItem('lycan_history', JSON.stringify(history));
+            } catch (e) {
+                console.warn('Не удалось сохранить историю:', e);
             }
+        }
 
-            if (giftData && giftData.type === 'Дар') {
-                if (giftData.text === 'Принимает облик, чей размер меньше или больше нормы') {
-                    if (rand() < 0.5) {
-                        hasSmallGift = true;
-                    } else {
-                        hasGiantGift = true;
-                    }
-                }
-            }
-
-            let form = '';
-            let isChimera = false;
-            let chimeraData = null;
-
-            if (willBeChimera) {
-                isChimera = true;
-                chimeraData = generateChimera(location, rarityKey, hasGiantGift, hasSmallGift, giftData);
-                form = chimeraData.parts.join(' + ');
-            } else {
-                form = getRandomFamily(location, rarityKey, hasGiantGift, hasSmallGift);
-            }
-
-            function formMatchesSize(formStr, sizeSet) {
-                if (!formStr || formStr === 'Отсутствует') return false;
-                const parts = formStr.split(' + ').map(p => p.trim());
-                return parts.some(p => sizeSet.has(p));
-            }
-
-            if (hasGiantGift && !formMatchesSize(form, GIANT_FAMILIES)) {
-                hasGiantGift = false;
-                const newGift = getGiftOrCorruption(rarityKey, true, true);
-                giftData = newGift || null;
-            }
-
-            if (hasSmallGift && !formMatchesSize(form, SMALL_FAMILIES)) {
-                hasSmallGift = false;
-                const newGift = getGiftOrCorruption(rarityKey, true, true);
-                giftData = newGift || null;
-            }
-
-            if (isChimera && chimeraData && (chimeraData.hasMixedSizes || chimeraData.isTriple) && meta.hasGift) {
-                giftData = { type: 'Дар', text: 'Уравновешивание размеров' };
-            }
-
-            const status = getStatus(location, rarityKey, meta, form);
-
-            if (status === 'Предводитель' && meta.hasGift) {
-                giftData = { type: 'Дар', text: 'Предводитель (обладает чертами своего облика)' };
-            }
-
-            if (status !== 'Предводитель' && giftData && giftData.text === 'Предводитель (обладает чертами своего облика)') {
-                giftData = null;
-            }
-
-            const palette = generatePalette(activeFilters);
-            const markings = generateMarkings(form, rarityKey, location);
-
-            return {
-                rarity: meta.label,
-                rarityKey: rarityKey,
-                location,
-                form,
-                gift: giftData,
-                status,
-                palette,
-                markings,
-                hasGiantGift,
-                hasSmallGift,
-                isChimera,
-                chimeraData
+        function addToHistory(charData) {
+            const history = getHistory();
+            const entry = {
+                id: Date.now().toString(),
+                timestamp: Date.now(),
+                ...charData
             };
+            history.unshift(entry);
+            if (history.length > CONFIG.MAX_HISTORY) {
+                history.length = CONFIG.MAX_HISTORY;
+            }
+            saveHistory(history);
+            renderHistory();
+        }
+
+        function clearHistory() {
+            if (confirm('Очистить всю историю генераций?')) {
+                saveHistory([]);
+                renderHistory();
+            }
+        }
+
+        function loadHistoryEntry(id) {
+            const history = getHistory();
+            const entry = history.find(h => h.id === id);
+            if (entry) {
+                const result = {
+                    rarity: entry.rarity,
+                    rarityKey: entry.rarityKey,
+                    location: entry.location,
+                    form: entry.form,
+                    gift: entry.gift,
+                    status: entry.status,
+                    palette: entry.palette,
+                    markings: entry.markings,
+                    hasGiantGift: entry.hasGiantGift,
+                    hasSmallGift: entry.hasSmallGift,
+                    isChimera: entry.isChimera,
+                    chimeraData: entry.chimeraData
+                };
+                render(result, entry.rarityKey);
+                document.getElementById('resultBlock').dataset.favId = '';
+                // Проверяем, сохранён ли в избранное
+                const favId = document.getElementById('resultBlock').dataset.favId;
+                if (favId && isFavorite(favId)) {
+                    updateFavoriteButton(true);
+                } else {
+                    updateFavoriteButton(false);
+                }
+                document.getElementById('resultBlock').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function renderHistory() {
+            const history = getHistory();
+            const container = document.getElementById('historyList');
+            const section = document.getElementById('historySection');
+            
+            if (history.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+            
+            section.classList.remove('hidden');
+            container.innerHTML = history.map(entry => {
+                const time = new Date(entry.timestamp);
+                const timeStr = time.toLocaleString('ru-RU', { 
+                    day: '2-digit', month: '2-digit', year: 'numeric',
+                    hour: '2-digit', minute: '2-digit'
+                });
+                return `
+                    <div class="history-item" data-id="${entry.id}">
+                        <div class="h-info">
+                            <span class="h-rarity">${entry.rarity}</span>
+                            <span class="h-desc">${entry.location} • ${entry.form}</span>
+                        </div>
+                        <span class="h-time">${timeStr}</span>
+                    </div>
+                `;
+            }).join('');
+
+            container.querySelectorAll('.history-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    loadHistoryEntry(item.dataset.id);
+                });
+            });
         }
 
         // ================================================================
@@ -3035,6 +3154,109 @@
         }
 
         // ================================================================
+        //  ГЕНЕРАЦИЯ ПЕРСОНАЖА (ОСНОВНАЯ)
+        // ================================================================
+
+        function generateLycan(rarityKey, activeFilters) {
+            const meta = RARITY_META[rarityKey];
+            if (!meta) return null;
+
+            let pool;
+            let location;
+
+            if (rarityKey === 'exotic_beast' && rand() < 0.1) {
+                location = randomItem(LOCATIONS.isolated);
+            } else {
+                pool = (meta.loc === 'all') ? LOCATIONS.all : LOCATIONS[meta.loc];
+                location = randomItem(pool);
+            }
+
+            let hasGiantGift = false;
+            let hasSmallGift = false;
+            let giftData = null;
+
+            const willBeChimera = rand() < CONFIG.CHIMERA_CHANCE;
+
+            if (!willBeChimera) {
+                giftData = getGiftOrCorruption(rarityKey, true, true);
+            } else {
+                giftData = getGiftOrCorruption(rarityKey, false, false);
+            }
+
+            if (giftData && giftData.type === 'Дар') {
+                if (giftData.text === 'Принимает облик, чей размер меньше или больше нормы') {
+                    if (rand() < 0.5) {
+                        hasSmallGift = true;
+                    } else {
+                        hasGiantGift = true;
+                    }
+                }
+            }
+
+            let form = '';
+            let isChimera = false;
+            let chimeraData = null;
+
+            if (willBeChimera) {
+                isChimera = true;
+                chimeraData = generateChimera(location, rarityKey, hasGiantGift, hasSmallGift, giftData);
+                form = chimeraData.parts.join(' + ');
+            } else {
+                form = getRandomFamily(location, rarityKey, hasGiantGift, hasSmallGift);
+            }
+
+            function formMatchesSize(formStr, sizeSet) {
+                if (!formStr || formStr === 'Отсутствует') return false;
+                const parts = formStr.split(' + ').map(p => p.trim());
+                return parts.some(p => sizeSet.has(p));
+            }
+
+            if (hasGiantGift && !formMatchesSize(form, GIANT_FAMILIES)) {
+                hasGiantGift = false;
+                const newGift = getGiftOrCorruption(rarityKey, true, true);
+                giftData = newGift || null;
+            }
+
+            if (hasSmallGift && !formMatchesSize(form, SMALL_FAMILIES)) {
+                hasSmallGift = false;
+                const newGift = getGiftOrCorruption(rarityKey, true, true);
+                giftData = newGift || null;
+            }
+
+            if (isChimera && chimeraData && (chimeraData.hasMixedSizes || chimeraData.isTriple) && meta.hasGift) {
+                giftData = { type: 'Дар', text: 'Уравновешивание размеров' };
+            }
+
+            const status = getStatus(location, rarityKey, meta, form);
+
+            if (status === 'Предводитель' && meta.hasGift) {
+                giftData = { type: 'Дар', text: 'Предводитель (обладает чертами своего облика)' };
+            }
+
+            if (status !== 'Предводитель' && giftData && giftData.text === 'Предводитель (обладает чертами своего облика)') {
+                giftData = null;
+            }
+
+            const palette = generatePalette(activeFilters);
+            const markings = generateMarkings(form, rarityKey, location);
+
+            return {
+                rarity: meta.label,
+                rarityKey: rarityKey,
+                location,
+                form,
+                gift: giftData,
+                status,
+                palette,
+                markings,
+                hasGiantGift,
+                hasSmallGift,
+                isChimera,
+                chimeraData
+            };
+        }
+
+        // ================================================================
         //  СОБЫТИЯ
         // ================================================================
 
@@ -3046,6 +3268,10 @@
             const result = generateLycan(key, filters);
             document.getElementById('resultBlock').dataset.favId = '';
             render(result, key);
+            // Добавляем в историю
+            if (result) {
+                addToHistory(result);
+            }
         });
 
         document.getElementById('favoriteBtn').addEventListener('click', function() {
@@ -3073,6 +3299,17 @@
         document.getElementById('favoritesToggle').addEventListener('click', function() {
             const list = document.getElementById('favoritesList');
             list.classList.toggle('hidden');
+        });
+
+        document.getElementById('historyToggle').addEventListener('click', function(e) {
+            if (e.target.classList.contains('history-clear-btn')) return;
+            const list = document.getElementById('historyList');
+            list.classList.toggle('hidden');
+        });
+
+        document.getElementById('clearHistoryBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            clearHistory();
         });
 
         document.getElementById('guideToggle').addEventListener('click', function() {
@@ -3118,6 +3355,11 @@
             const result = generateLycan(key, filters);
             render(result, key);
             renderFavorites();
+            renderHistory();
+            // Добавляем в историю стартовую генерацию
+            if (result) {
+                addToHistory(result);
+            }
         });
     </script>
 </body>
