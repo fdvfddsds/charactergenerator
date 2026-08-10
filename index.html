@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -1174,8 +1173,6 @@
             'Любит есть рыбу',
             'Опытный рыболов',
             'Любит рыть норы',
-            'Живет в людской избе',
-            'Любит чай',
             'Собирает кости',
             'Любит блестящие безделушки',
             
@@ -2597,7 +2594,7 @@
         }
 
         // ================================================================
-        //  ПРИМЕТЫ
+        //  ПРИМЕТЫ (ИСПРАВЛЕННАЯ ЛОГИКА РЕГИОНАЛЬНЫХ ПРИМЕТ)
         // ================================================================
 
         function generateMarkings(form, rarityKey, location) {
@@ -2617,9 +2614,11 @@
                 );
             }
 
-            // Региональные приметы — ТОЛЬКО для экзотических редкостей
+            // РЕГИОНАЛЬНЫЕ ПРИМЕТЫ — ТОЛЬКО ДЛЯ ЭКЗОТИЧЕСКИХ РЕДКОСТЕЙ И ЭКЗОТИЧЕСКИХ ЛОКАЦИЙ
             const exoticRarities = ['exotic', 'gifted_exotic', 'exotic_beast'];
-            if (exoticRarities.includes(rarityKey) && LOCATION_MARKINGS[location]) {
+            const isExoticLocation = LOCATIONS.exotic.includes(location) || LOCATIONS.isolated.includes(location);
+            
+            if (exoticRarities.includes(rarityKey) && isExoticLocation && LOCATION_MARKINGS[location]) {
                 availableMarkings = [...availableMarkings, ...LOCATION_MARKINGS[location]];
             }
 
@@ -3124,4 +3123,3 @@
     </script>
 </body>
 </html>
-```
