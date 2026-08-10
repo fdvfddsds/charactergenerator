@@ -586,125 +586,6 @@
             transform: scale(0.9);
         }
 
-        /* История */
-        .history-section {
-            margin-top: 16px;
-            border-top: 1px solid rgba(224,197,143,0.06);
-            padding-top: 16px;
-            transition: opacity 0.5s ease, max-height 0.6s ease, padding 0.5s ease, margin 0.5s ease, border 0.5s ease;
-            max-height: 600px;
-            overflow: hidden;
-        }
-        .history-section.hidden { 
-            opacity: 0;
-            max-height: 0;
-            padding-top: 0;
-            margin-top: 0;
-            border-top: none;
-            pointer-events: none;
-        }
-        .history-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 0.8rem;
-            color: rgba(224,197,143,0.4);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: color 0.3s ease;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .history-title:hover { color: rgba(224,197,143,0.6); }
-        .history-clear-btn {
-            background: none;
-            border: none;
-            color: rgba(224,197,143,0.2);
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: 0.3s;
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-        .history-clear-btn:hover { 
-            color: #ff6b6b; 
-            background: rgba(255,107,107,0.1);
-        }
-        .history-list {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            max-height: 350px;
-            overflow-y: auto;
-            padding-right: 4px;
-            transition: opacity 0.5s ease, max-height 0.6s ease;
-        }
-        .history-list.hidden {
-            opacity: 0;
-            max-height: 0;
-            pointer-events: none;
-            overflow: hidden;
-            padding-right: 0;
-        }
-        .history-list::-webkit-scrollbar {
-            width: 3px;
-        }
-        .history-list::-webkit-scrollbar-track {
-            background: rgba(224,197,143,0.04);
-            border-radius: 10px;
-        }
-        .history-list::-webkit-scrollbar-thumb {
-            background: rgba(224,197,143,0.2);
-            border-radius: 10px;
-        }
-        .history-list::-webkit-scrollbar-thumb:hover {
-            background: rgba(224,197,143,0.3);
-        }
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 12px;
-            background: rgba(17,34,80,0.10);
-            border-radius: 10px;
-            border: 1px solid rgba(224,197,143,0.03);
-            cursor: pointer;
-            transition: 0.3s ease;
-            font-size: 0.8rem;
-            animation: itemSlideIn 0.3s ease;
-        }
-        .history-item:hover {
-            background: rgba(17,34,80,0.20);
-            border-color: rgba(224,197,143,0.08);
-            transform: translateX(3px);
-        }
-        .history-item .h-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-            flex: 1;
-            min-width: 0;
-        }
-        .history-item .h-rarity {
-            color: #e0c58f;
-            font-weight: 500;
-            font-size: 0.75rem;
-        }
-        .history-item .h-desc {
-            color: rgba(245,240,233,0.4);
-            font-size: 0.7rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .history-item .h-time {
-            color: rgba(245,240,233,0.2);
-            font-size: 0.6rem;
-            white-space: nowrap;
-            margin-left: 8px;
-        }
-
         @media (max-width: 600px) {
             .container { 
                 padding: 24px 20px 32px; 
@@ -720,8 +601,6 @@
             .filter-group .custom-check { width: 28px; height: 28px; }
             .class-filter-group .custom-class-check { width: 24px; height: 24px; }
             .favorite-item { flex-wrap: wrap; gap: 8px; }
-            .history-item { flex-wrap: wrap; gap: 4px; }
-            .history-item .h-time { margin-left: 0; }
         }
     </style>
 </head>
@@ -767,8 +646,8 @@
 
                 <div class="guide-divider"></div>
 
-                <p><strong>Сохранение</strong> — нажмите на ★ рядом с результатом, чтобы добавить персонажа в избранное. Сохранённые персонажи доступны в разделе «Сохранённые персонажи» под результатом.</p>
-                <p style="margin-top: 4px;"><strong>История</strong> — все сгенерированные персонажи сохраняются в истории. Нажмите на любой результат в истории, чтобы загрузить его.</p>
+                <p><strong>Сохранение</strong> — нажмите на ★ рядом с результатом, чтобы добавить персонажа в избранное. Сохранённые персонажи хранятся в вашем браузере и доступны в разделе «Сохранённые персонажи» под результатом.</p>
+                <p style="margin-top: 4px;">Чтобы загрузить сохранённого персонажа — кликните по нему в списке. Чтобы удалить — нажмите ✕.</p>
             </div>
         </div>
 
@@ -835,13 +714,6 @@
                 <div class="favorites-title" id="favoritesToggle">✦ Сохранённые персонажи</div>
                 <div class="favorites-list hidden" id="favoritesList"></div>
             </div>
-            <div class="history-section hidden" id="historySection">
-                <div class="history-title" id="historyToggle">
-                    <span>✦ История генераций</span>
-                    <button class="history-clear-btn" id="clearHistoryBtn">Очистить</button>
-                </div>
-                <div class="history-list hidden" id="historyList"></div>
-            </div>
         </div>
     </div>
 
@@ -858,8 +730,7 @@
             MISSING_FORM_CHANCE: 0.03,
             MARKINGS_NONE_CHANCE: 0.30,
             MARKINGS_TWO_CHANCE: 0.50,
-            LOCATION_STATUS_CHANCE: 0.45,
-            MAX_HISTORY: 50
+            LOCATION_STATUS_CHANCE: 0.45
         };
 
         function rand() {
@@ -1066,9 +937,10 @@
         };
 
         // ================================================================
-        //  ДАРЫ И ИСКАЖЕНИЯ
+        //  ДАРЫ И ИСКАЖЕНИЯ (ОБНОВЛЁННЫЕ)
         // ================================================================
 
+        // ОБЩИЕ (могут быть и Дарами, и Искажениями)
         const COMMON_GIFTS = [
             'Одна из сенсорных систем (обоняние, эхолокация, зрение и др.) идентичны облику',
             'Способен частично обращаться, но это компенсировано некими тяжелыми ограничениями',
@@ -1077,6 +949,7 @@
             'Некие физические показатели идентичны облику (например, концентрация кислорода в крови)'
         ];
 
+        // ЧИСТЫЕ ДАРЫ
         const PURE_GIFTS = [
             'Лорный дар: предводитель или избранный',
             'Дар, связанный с пониманием или имитацией речи облика',
@@ -1086,6 +959,7 @@
             'Не восприимчив к некой типичной слабости ликанов (например, серебро или лунный цикл)'
         ];
 
+        // ЧИСТЫЕ ИСКАЖЕНИЯ
         const PURE_CORRUPTIONS = [
             'Не способен поддерживать обращение в определенных условиях',
             'Лорное искажение: обращение искажено из-за проклятия, болезни или травмы',
@@ -1094,8 +968,17 @@
             'Одна из естественных функций мозга нарушена, поскольку идентична облику (например, понимание кошачьей речи, восприятие пространства)'
         ];
 
-        const GIFTS = [...COMMON_GIFTS, ...PURE_GIFTS];
-        const CORRUPTIONS = [...COMMON_GIFTS, ...PURE_CORRUPTIONS];
+        // ПОЛНЫЙ СПИСОК ДАРОВ
+        const GIFTS = [
+            ...COMMON_GIFTS,
+            ...PURE_GIFTS
+        ];
+
+        // ПОЛНЫЙ СПИСОК ИСКАЖЕНИЙ
+        const CORRUPTIONS = [
+            ...COMMON_GIFTS,
+            ...PURE_CORRUPTIONS
+        ];
 
         // ================================================================
         //  АРХЕТИПЫ
@@ -1170,28 +1053,29 @@
         //  ОСОБЫЕ ПРИМЕТЫ
         // ================================================================
 
+        // ГРУППЫ ПРИМЕТ, КОТОРЫЕ НЕ МОГУТ ВЫПАДАТЬ ВМЕСТЕ
         const MARKING_EXCLUSIONS = {
-            'Худой': ['Пухлый', 'Грузный', 'Костлявое тело'],
-            'Пухлый': ['Худой', 'Щуплый', 'Поджарый', 'Костлявое тело'],
-            'Грузный': ['Худой', 'Щуплый', 'Поджарый', 'Элегантный стан', 'Грациозный стан'],
-            'Щуплый': ['Пухлый', 'Грузный', 'Коренастый'],
-            'Коренастый': ['Щуплый', 'Поджарый', 'Элегантный стан', 'Грациозный стан'],
-            'Поджарый': ['Пухлый', 'Грузный', 'Коренастый'],
-            'Костлявое тело': ['Пухлый', 'Элегантный стан', 'Грациозный стан'],
-            'Элегантный стан': ['Грузный', 'Коренастый', 'Костлявое тело', 'Сутулый', 'Грациозный стан'],
-            'Грациозный стан': ['Грузный', 'Коренастый', 'Костлявое тело', 'Сутулый', 'Элегантный стан'],
-            'Сутулый': ['Грациозный стан', 'Элегантный стан'],
-            'Горбится': ['Грациозный стан', 'Элегантный стан'],
-            'Большие клыки': ['Выбитые клыки', 'Сточенные клыки'],
-            'Выбитые клыки': ['Большие клыки', 'Сточенные клыки'],
-            'Сточенные клыки': ['Большие клыки', 'Выбитые клыки'],
-            'Длинный хвост': ['Куцый хвост', 'Откушенный хвост'],
-            'Куцый хвост': ['Длинный хвост'],
-            'Откушенный хвост': ['Длинный хвост'],
-            'Гладкошерстный': ['Кудрявая шерсть', 'Шерсть в колтунах'],
-            'Кудрявая шерсть': ['Гладкошерстный'],
-            'Шерсть в колтунах': ['Гладкошерстный'],
-            'Густая шерсть': ['Гладкошерстный']
+            'худой': ['пухлый', 'грузный', 'костлявое тело'],
+            'пухлый': ['худой', 'щуплый', 'поджарый', 'костлявое тело'],
+            'грузный': ['худой', 'щуплый', 'поджарый', 'элегантный стан', 'грациозный стан'],
+            'щуплый': ['пухлый', 'грузный', 'коренастый'],
+            'коренастый': ['щуплый', 'поджарый', 'элегантный стан', 'грациозный стан'],
+            'поджарый': ['пухлый', 'грузный', 'коренастый'],
+            'костлявое тело': ['пухлый', 'элегантный стан', 'грациозный стан'],
+            'элегантный стан': ['грузный', 'коренастый', 'костлявое тело', 'сутулый', 'грациозный стан'],
+            'грациозный стан': ['грузный', 'коренастый', 'костлявое тело', 'сутулый', 'элегантный стан'],
+            'сутулый': ['грациозный стан', 'элегантный стан'],
+            'горбится': ['грациозный стан', 'элегантный стан'],
+            'Большие клыки': ['выбитые клыки', 'сточенные клыки'],
+            'выбитые клыки': ['Большие клыки', 'сточенные клыки'],
+            'сточенные клыки': ['Большие клыки', 'выбитые клыки'],
+            'длинный хвост': ['куцый хвост', 'откушенный хвост'],
+            'куцый хвост': ['длинный хвост'],
+            'откушенный хвост': ['длинный хвост'],
+            'гладкошерстный': ['кудрявая шерсть', 'шерсть в колтунах'],
+            'кудрявая шерсть': ['гладкошерстный'],
+            'шерсть в колтунах': ['гладкошерстный'],
+            'густая шерсть': ['гладкошерстный']
         };
 
         function areMarkingsCompatible(marking1, marking2) {
@@ -1214,8 +1098,6 @@
             'Шрам в форме полумесяца',
             'Ожоги от огня',
             'Ожоги от серебра',
-            'Шерсть в колтунах',
-            'Отметина в виде звезды на лбу',
             
             // Аксессуары и украшения
             'Аксессуары из перьев/шерсти/костей облика',
@@ -1243,7 +1125,7 @@
             
             // Особенности глаз, лап, ушей
             'Гетерохромия',
-            'Анизокория',
+            'Аникорзия',
             'Желтые белки глаз',
             'Светлые ресницы',
             'Разноцветные подушечки лап',
@@ -1261,7 +1143,6 @@
             'Кудрявые усы',
             'Большие клыки',
             'Длинная шерсть на щеках',
-            'Глаза прикрыты шерстью или украшениями',
             'Длинные ресницы',
             'Гладкошерстный',
             'Седина',
@@ -1298,18 +1179,15 @@
             'Сирота',
             'Вдовец',
             'Вырос вне общества котов',
-            'Не знает кошачий язык',
             'Ненавидит сражения',
             
             // Физические особенности
             'Сломанный клык',
-            'Нет когтей',
             'Сломанный хвост',
             'Скрученный хвост',
             'Куцый хвост',
             'Короткие лапы',
             'Длинные лапы',
-            'Недоразвитые передние лапы',
             'Плоская морда',
             'Выраженные скулы',
             'Ориентальная морда',
@@ -1318,18 +1196,9 @@
             'Выгоревшая на солнце шерсть',
             'Постоянно текут сопли',
             'Часто чихает',
-            'Аллергия',
-            
-            // ЭКСТРАОРДИНАРНЫЕ (VERY LOW CHANCE)
-            'Альбинизм',
-            'Слепой',
-            'Является мертвым духом',
-            'Имеет ритуальные шрамы',
-            'Имеет тотемное животное',
-            'Лишен ликантропии в юности'
+            'Аллергия'
         ];
 
-        // ❌ Региональные приметы УБРАНЫ из основного массива
         const LOCATION_MARKINGS = {
             'Киевская Русь': ['Бусины в шерсти', 'Живет в людской избе'],
             'Империя Мин': ['Любит чай'],
@@ -1341,11 +1210,16 @@
             'Вырос вне общества котов',
             'Косоглазие',
             'Сломанная челюсть',
+            'Недоразвитые передние лапы',
             'Мутация рогов',
             'Лишние пальцы на задних лапах',
             'Нет усов',
             'Сиамский близнец',
-            'Постоянно забывает собственное имя'
+            'Шерсть в колтунах',
+            'Отметина в виде звезды на лбу',
+            'Постоянно забывает собственное имя',
+            'Глаза прикрыты шерстью или украшениями',
+            'Нет когтей'
         ];
 
         const VERY_LOW_CHANCE_MARKINGS = [
@@ -1365,7 +1239,6 @@
             'Выбитые клыки',
             'Горбится',
             'Сутулый',
-            'Недоразвитые передние лапы',
             'Является мертвым духом',
             'Имеет ритуальные шрамы',
             'Имеет тотемное животное',
@@ -1375,7 +1248,7 @@
         const NORTHERN_MARKINGS = ['Густая шерсть'];
 
         // ================================================================
-        //  ОБЛИКИ
+        //  РАЗМЕРЫ
         // ================================================================
 
         const GIANT_FAMILIES = new Set([
@@ -1390,14 +1263,14 @@
             'Морские слоны (Mirounga)',
             'Китовые акулы (Rhincodontidae)',
             'Исполинские черепахи (Testudinidae)',
+            'Черепахи (Testudinidae)',
+            'Галапагосские черепахи (Testudinidae)',
             'Морские коровы (Sirenia)',
             'Дюгони (Dugongidae)',
             'Ламантины (Trichechidae)',
             'Носороги (Rhinocerotidae)',
             'Тапиры (Tapiridae)',
-            'Тапировые (Tapiridae)',
-            'Черепахи (Testudinidae)',
-            'Галапагосские черепахи (Testudinidae)'
+            'Тапировые (Tapiridae)'
         ]);
 
         const SMALL_FAMILIES = new Set([
@@ -1414,12 +1287,40 @@
             'Ракообразные (Crustacea)'
         ]);
 
+        // Семейства, которые в Европе только на юге (Средиземноморье / Пиренеи)
+        const SOUTHERN_ONLY_IN_EUROPE = new Set([
+            'Фламинговые (Phoenicopteridae)'
+        ]);
+
+        // Локации, где южных европейских семейств быть не должно
+        const NORTHERN_EUROPE_LOCATIONS = new Set([
+            'Королевство Дания',
+            'Королевство Норвегия',
+            'Королевство Швеция',
+            'Скандинавия',
+            'Балтийский регион',
+            'Королевство Англия',
+            'Британские острова',
+            'Королевство Польша',
+            'Королевство Богемия',
+            'Священная Римская империя',
+            'Центральная Европа',
+            'Фландрия',
+            'Герцогство Бургундия'
+        ]);
+
+
+        // ================================================================
+        //  СЕМЕЙСТВА ПО РЕГИОНАМ (ИСПРАВЛЕННЫЕ)
+        // ================================================================
+
         const FAMILIES_BY_REGION = {
             europe: {
                 mammal: [
                     'Полорогие (Bovidae)', 'Медвежьи (Ursidae)',
                     'Кошачьи (Felidae)', 'Псовые (Canidae)', 'Куньи (Mustelidae)',
-                    'Настоящие тюлени (Phocidae)', 'Землеройковые (Soricidae)',
+                    'Настоящие тюлени (Phocidae)',
+                    'Землеройковые (Soricidae)',
                     'Ежовые (Erinaceidae)', 'Кротовые (Talpidae)',
                     'Мышиные (Muridae)', 'Беличьи (Sciuridae)', 'Зайцевые (Leporidae)',
                     'Свиные (Suidae)', 'Рукокрылые (Chiroptera)',
@@ -1472,6 +1373,7 @@
                     'Брюхоногие (Gastropoda)',
                     'Ракообразные (Crustacea)',
                     'Кольчатые черви (Annelida)'
+                    // ❌ Иглокожие (Echinodermata) УБРАНЫ
                 ],
                 insect: [
                     'Жесткокрылые (жуки) (Coleoptera)',
@@ -1488,13 +1390,10 @@
                 mammal: [
                     'Оленевые (Cervidae)', 'Полорогие (Bovidae)', 'Медвежьи (Ursidae)',
                     'Кошачьи (Felidae)', 'Псовые (Canidae)', 'Куньи (Mustelidae)',
-                    'Настоящие тюлени (Phocidae)', 'Ушастые тюлени (Otariidae)',
+                    'Настоящие тюлени (Phocidae)',
                     'Землеройковые (Soricidae)', 'Ежовые (Erinaceidae)',
                     'Кротовые (Talpidae)', 'Мышиные (Muridae)', 'Беличьи (Sciuridae)',
-                    'Зайцевые (Leporidae)', 'Свиные (Suidae)',
-                    'Рукокрылые (Chiroptera)',
-                    'Соневые (Gliridae)', 'Хомяковые (Cricetidae)',
-                    'Бобровые (Castoridae)', 'Лошадиные (Equidae)'
+                    'Зайцевые (Leporidae)', 'Свиные (Suidae)'
                 ],
                 bird: [
                     'Врановые (Corvidae)', 'Воробьиные (Passeridae)',
@@ -1550,12 +1449,7 @@
                 insect: [
                     'Жесткокрылые (жуки) (Coleoptera)',
                     'Чешуекрылые (бабочки) (Lepidoptera)',
-                    'Паукообразные (Arachnida)',
-                    'Перепончатокрылые (Hymenoptera)',
-                    'Двукрылые (Diptera)',
-                    'Прямокрылые (Orthoptera)',
-                    'Стрекозы (Odonata)',
-                    'Скорпионы (Scorpiones)'
+                    'Паукообразные (Arachnida)'
                 ]
             },
             north_america: {
@@ -1563,15 +1457,9 @@
                     'Оленевые (Cervidae)', 'Полорогие (Bovidae)', 'Медвежьи (Ursidae)',
                     'Кошачьи (Felidae)', 'Псовые (Canidae)', 'Куньи (Mustelidae)',
                     'Енотовые (Procyonidae)', 'Скунсовые (Mephitidae)',
-                    'Ушастые тюлени (Otariidae)',
                     'Землеройковые (Soricidae)', 'Кротовые (Talpidae)',
                     'Мышиные (Muridae)', 'Беличьи (Sciuridae)', 'Зайцевые (Leporidae)',
-                    'Дикобразовые (Erethizontidae)', 'Вилороговые (Antilocapridae)',
-                    'Рукокрылые (Chiroptera)',
-                    'Бобровые (Castoridae)',
-                    'Мешотчатые крысы (Geomyidae)',
-                    'Пекариевые (Tayassuidae)',
-                    'Опоссумовые (Didelphidae)'
+                    'Дикобразовые (Erethizontidae)', 'Вилороговые (Antilocapridae)'
                 ],
                 bird: [
                     'Врановые (Corvidae)', 'Воробьиные (Passeridae)',
@@ -1627,12 +1515,7 @@
                 insect: [
                     'Жесткокрылые (жуки) (Coleoptera)',
                     'Чешуекрылые (бабочки) (Lepidoptera)',
-                    'Паукообразные (Arachnida)',
-                    'Перепончатокрылые (Hymenoptera)',
-                    'Двукрылые (Diptera)',
-                    'Прямокрылые (Orthoptera)',
-                    'Стрекозы (Odonata)',
-                    'Скорпионы (Scorpiones)'
+                    'Паукообразные (Arachnida)'
                 ]
             },
             central_america: {
@@ -1644,9 +1527,7 @@
                     'Агутиевые (Dasyproctidae)', 'Свинковые (Caviidae)',
                     'Капибаровые (Hydrochoeridae)', 'Нутриевые (Myocastoridae)',
                     'Цепкохвостые дикобразы (Erethizontidae)', 'Тапировые (Tapiridae)',
-                    'Пекариевые (Tayassuidae)',
-                    'Рукокрылые (Chiroptera)',
-                    'Приматы (Cebidae / Atelidae)'
+                    'Пекариевые (Tayassuidae)'
                 ],
                 bird: [
                     'Врановые (Corvidae)', 'Воробьиные (Passeridae)',
@@ -1695,12 +1576,7 @@
                 insect: [
                     'Жесткокрылые (жуки) (Coleoptera)',
                     'Чешуекрылые (бабочки) (Lepidoptera)',
-                    'Паукообразные (Arachnida)',
-                    'Перепончатокрылые (Hymenoptera)',
-                    'Двукрылые (Diptera)',
-                    'Прямокрылые (Orthoptera)',
-                    'Стрекозы (Odonata)',
-                    'Скорпионы (Scorpiones)'
+                    'Паукообразные (Arachnida)'
                 ]
             },
             south_america: {
@@ -1708,7 +1584,6 @@
                     'Оленевые (Cervidae)', 'Медвежьи (Ursidae)', 'Кошачьи (Felidae)',
                     'Псовые (Canidae)', 'Куньи (Mustelidae)', 'Енотовые (Procyonidae)',
                     'Скунсовые (Mephitidae)',
-                    'Ушастые тюлени (Otariidae)',
                     'Мышиные (Muridae)',
                     'Беличьи (Sciuridae)',
                     'Настоящие ленивцы (Bradypodidae)',
@@ -1718,9 +1593,7 @@
                     'Капибаровые (Hydrochoeridae)', 'Восьмизубовые (Octodontidae)',
                     'Нутриевые (Myocastoridae)', 'Опоссумовые (Didelphidae)',
                     'Цепкохвостые дикобразы (Erethizontidae)', 'Тапировые (Tapiridae)',
-                    'Пекариевые (Tayassuidae)',
-                    'Рукокрылые (Chiroptera)',
-                    'Приматы (Cebidae / Atelidae)'
+                    'Пекариевые (Tayassuidae)'
                 ],
                 bird: [
                     'Врановые (Corvidae)', 'Воробьиные (Passeridae)',
@@ -1771,12 +1644,7 @@
                 insect: [
                     'Жесткокрылые (жуки) (Coleoptera)',
                     'Чешуекрылые (бабочки) (Lepidoptera)',
-                    'Паукообразные (Arachnida)',
-                    'Перепончатокрылые (Hymenoptera)',
-                    'Двукрылые (Diptera)',
-                    'Прямокрылые (Orthoptera)',
-                    'Стрекозы (Odonata)',
-                    'Скорпионы (Scorpiones)'
+                    'Паукообразные (Arachnida)'
                 ]
             },
             africa: {
@@ -1786,17 +1654,13 @@
                     'Златокротовые (Chrysochloridae)', 'Прыгунчиковые (Macroscelididae)',
                     'Долгоногие (Pedetidae)', 'Дикобразовые (Hystricidae)',
                     'Галаговые (Galagidae)', 'Панголины (Manidae)',
-                    'Полорогие (Bovidae)', 'Кошачьи (Felidae)',
+                    'Оленевые (Cervidae)', 'Полорогие (Bovidae)', 'Кошачьи (Felidae)',
                     'Псовые (Canidae)', 'Куньи (Mustelidae)',
                     'Виверровые (Viverridae)', 'Гиеновые (Hyaenidae)',
                     'Землеройковые (Soricidae)', 'Ежовые (Erinaceidae)',
                     'Мышиные (Muridae)', 'Беличьи (Sciuridae)', 'Зайцевые (Leporidae)',
                     'Свиные (Suidae)', 'Слоновые (Elephantidae)',
-                    'Дюгони (Dugongidae)',
-                    'Рукокрылые (Chiroptera)',
-                    'Мартышковые (Cercopithecidae)',
-                    'Человекообразные (Hominidae)',
-                    'Мангустовые (Herpestidae)'
+                    'Дюгони (Dugongidae)'
                 ],
                 bird: [
                     'Врановые (Corvidae)', 'Воробьиные (Passeridae)',
@@ -1847,12 +1711,7 @@
                 insect: [
                     'Жесткокрылые (жуки) (Coleoptera)',
                     'Чешуекрылые (бабочки) (Lepidoptera)',
-                    'Паукообразные (Arachnida)',
-                    'Перепончатокрылые (Hymenoptera)',
-                    'Двукрылые (Diptera)',
-                    'Прямокрылые (Orthoptera)',
-                    'Стрекозы (Odonata)',
-                    'Скорпионы (Scorpiones)'
+                    'Паукообразные (Arachnida)'
                 ]
             },
             west_asia: {
@@ -1862,12 +1721,7 @@
                     'Виверровые (Viverridae)', 'Гиеновые (Hyaenidae)',
                     'Дамановые (Procaviidae)', 'Землеройковые (Soricidae)',
                     'Ежовые (Erinaceidae)', 'Мышиные (Muridae)', 'Беличьи (Sciuridae)',
-                    'Зайцевые (Leporidae)', 'Свиные (Suidae)',
-                    'Рукокрылые (Chiroptera)',
-                    'Тушканчиковые (Dipodidae)',
-                    'Песчанковые (Gerbillinae)',
-                    'Лошадиные (Equidae)',
-                    'Верблюдовые (Camelidae)'
+                    'Зайцевые (Leporidae)', 'Свиные (Suidae)'
                 ],
                 bird: [
                     'Врановые (Corvidae)', 'Воробьиные (Passeridae)',
@@ -1906,134 +1760,72 @@
                 insect: [
                     'Жесткокрылые (жуки) (Coleoptera)',
                     'Чешуекрылые (бабочки) (Lepidoptera)',
-                    'Паукообразные (Arachnida)',
-                    'Перепончатокрылые (Hymenoptera)',
-                    'Двукрылые (Diptera)',
-                    'Прямокрылые (Orthoptera)',
-                    'Стрекозы (Odonata)',
-                    'Скорпионы (Scorpiones)'
+                    'Паукообразные (Arachnida)'
                 ]
             },
             central_asia: {
                 mammal: [
-                    'Оленевые (Cervidae)', 'Полорогие (Bovidae)', 'Медвежьи (Ursidae)',
-                    'Кошачьи (Felidae)', 'Псовые (Canidae)', 'Куньи (Mustelidae)',
-                    'Землеройковые (Soricidae)', 'Ежовые (Erinaceidae)',
-                    'Мышиные (Muridae)', 'Беличьи (Sciuridae)', 'Зайцевые (Leporidae)',
-                    'Свиные (Suidae)', 'Лошадиные (Equidae)',
-                    'Верблюдовые (Camelidae)',
-                    'Рукокрылые (Chiroptera)',
-                    'Тушканчиковые (Dipodidae)',
-                    'Песчанковые (Gerbillinae)'
+                    'Полорогие (Bovidae)', 'Оленевые (Cervidae)', 'Псовые (Canidae)',
+                    'Кошачьи (Felidae)', 'Куньи (Mustelidae)', 'Медвежьи (Ursidae)',
+                    'Лошадиные (Equidae)', 'Зайцевые (Leporidae)', 'Мышиные (Muridae)',
+                    'Хомяковые (Cricetidae)', 'Беличьи (Sciuridae)', 'Рукокрылые (Chiroptera)',
+                    'Верблюдовые (Camelidae)', 'Свиные (Suidae)'
                 ],
                 bird: [
-                    'Врановые (Corvidae)', 'Воробьиные (Passeridae)',
-                    'Славковые (Sylviidae)', 'Кукушковые (Cuculidae)',
-                    'Голубиные (Columbidae)', 'Ястребиные (Accipitridae)',
-                    'Утиные (Anatidae)', 'Совиные (Strigidae)',
-                    'Дятловые (Picidae)', 'Жаворонковые (Alaudidae)',
-                    'Ласточковые (Hirundinidae)', 'Дроздовые (Turdidae)',
-                    'Синицевые (Paridae)', 'Скворцовые (Sturnidae)',
-                    'Вьюрковые (Fringillidae)', 'Рябки (Pteroclididae)'
+                    'Врановые (Corvidae)', 'Ястребиные (Accipitridae)', 'Совиные (Strigidae)',
+                    'Жаворонковые (Alaudidae)', 'Утиные (Anatidae)', 'Ржанковые (Charadriidae)',
+                    'Голубиные (Columbidae)', 'Вьюрковые (Fringillidae)', 'Дрофиные (Otididae)',
+                    'Фазановые (Phasianidae)', 'Журавлиные (Gruidae)'
                 ],
                 fish: [
-                    'Карповые (Cyprinidae)', 'Сомовые (Siluridae)',
-                    'Осетровые (Acipenseridae)', 'Лососевые (Salmonidae)'
+                    'Карповые (Cyprinidae)', 'Окуневые (Percidae)', 'Осетровые (Acipenseridae)',
+                    'Лососевые (Salmonidae)'
                 ],
                 reptile_amphibian: [
-                    'Настоящие ящерицы (Lacertidae)',
-                    'Гекконовые (Gekkonidae)',
-                    'Агамы (Agamidae)',
-                    'Вараны (Varanidae)',
-                    'Сцинковые (Scincidae)',
-                    'Ужеобразные (Colubridae)',
-                    'Гадюковые (Viperidae)',
-                    'Черепахи (Testudinidae)',
-                    'Настоящие лягушки (Ranidae)',
-                    'Жабы (Bufonidae)',
-                    'Саламандры (Salamandridae)',
-                    'Квакши (Hylidae)',
-                    'Чесночницы (Pelobatidae)',
-                    'Брюхоногие (Gastropoda)',
-                    'Ракообразные (Crustacea)',
-                    'Кольчатые черви (Annelida)'
+                    'Гадюковые (Viperidae)', 'Ужеобразные (Colubridae)', 'Агамовые (Agamidae)',
+                    'Гекконовые (Gekkonidae)', 'Черепахи (Testudinidae)',
+                    'Брюхоногие (Gastropoda)', 'Ракообразные (Crustacea)'
                 ],
                 insect: [
                     'Жесткокрылые (жуки) (Coleoptera)',
                     'Чешуекрылые (бабочки) (Lepidoptera)',
                     'Паукообразные (Arachnida)',
-                    'Перепончатокрылые (Hymenoptera)',
-                    'Двукрылые (Diptera)',
                     'Прямокрылые (Orthoptera)',
-                    'Стрекозы (Odonata)',
-                    'Скорпионы (Scorpiones)'
+                    'Перепончатокрылые (Hymenoptera)'
                 ]
             },
             south_asia: {
                 mammal: [
-                    'Оленевые (Cervidae)', 'Полорогие (Bovidae)', 'Медвежьи (Ursidae)',
-                    'Кошачьи (Felidae)', 'Псовые (Canidae)', 'Куньи (Mustelidae)',
-                    'Виверровые (Viverridae)', 'Гиеновые (Hyaenidae)',
-                    'Землеройковые (Soricidae)', 'Ежовые (Erinaceidae)',
-                    'Мышиные (Muridae)', 'Беличьи (Sciuridae)', 'Зайцевые (Leporidae)',
-                    'Свиные (Suidae)', 'Слоновые (Elephantidae)',
-                    'Рукокрылые (Chiroptera)',
-                    'Мартышковые (Cercopithecidae)',
-                    'Приматы (Cebidae / Atelidae)',
-                    'Панголины (Manidae)',
-                    'Лошадиные (Equidae)',
-                    'Верблюдовые (Camelidae)',
-                    'Тушканчиковые (Dipodidae)',
-                    'Песчанковые (Gerbillinae)'
+                    'Кошачьи (Felidae)', 'Псовые (Canidae)', 'Медвежьи (Ursidae)',
+                    'Куньи (Mustelidae)', 'Виверровые (Viverridae)', 'Мангустовые (Herpestidae)',
+                    'Слоновые (Elephantidae)', 'Носороговые (Rhinocerotidae)', 'Свиные (Suidae)',
+                    'Полорогие (Bovidae)', 'Оленевые (Cervidae)', 'Зайцевые (Leporidae)',
+                    'Мышиные (Muridae)', 'Беличьи (Sciuridae)', 'Рукокрылые (Chiroptera)',
+                    'Панголины (Manidae)'
                 ],
                 bird: [
-                    'Врановые (Corvidae)', 'Воробьиные (Passeridae)',
-                    'Славковые (Sylviidae)', 'Кукушковые (Cuculidae)',
-                    'Голубиные (Columbidae)', 'Ястребиные (Accipitridae)',
-                    'Утиные (Anatidae)', 'Совиные (Strigidae)',
-                    'Дятловые (Picidae)', 'Жаворонковые (Alaudidae)',
-                    'Ласточковые (Hirundinidae)', 'Дроздовые (Turdidae)',
-                    'Синицевые (Paridae)', 'Скворцовые (Sturnidae)',
-                    'Вьюрковые (Fringillidae)', 'Фазановые (Phasianidae)',
-                    'Птицы-носороги (Bucerotidae)'
+                    'Врановые (Corvidae)', 'Фазановые (Phasianidae)', 'Ястребиные (Accipitridae)',
+                    'Совиные (Strigidae)', 'Утиные (Anatidae)', 'Голубиные (Columbidae)',
+                    'Дятловые (Picidae)', 'Скворцовые (Sturnidae)',
+                    'Птицы-носороги (Bucerotidae)', 'Зимородковые (Alcedinidae)',
+                    'Цаплевые (Ardeidae)', 'Аистовые (Ciconiidae)'
                 ],
                 fish: [
-                    'Карповые (Cyprinidae)', 'Сомовые (Siluridae)',
-                    'Цихловые (Cichlidae)', 'Харациновые (Characidae)',
-                    'Аравановые (Osteoglossidae)',
-                    'Макрелевые (Scombridae)', 'Сельдевые (Clupeidae)',
-                    'Акульи (Carcharhinidae)', 'Скаты (Dasyatidae)'
+                    'Карповые (Cyprinidae)', 'Сомовые (Siluridae)', 'Змееголовые (Channidae)'
                 ],
                 reptile_amphibian: [
-                    'Настоящие ящерицы (Lacertidae)',
-                    'Гекконовые (Gekkonidae)',
-                    'Агамы (Agamidae)',
-                    'Вараны (Varanidae)',
-                    'Сцинковые (Scincidae)',
-                    'Ужеобразные (Colubridae)',
-                    'Гадюковые (Viperidae)',
-                    'Питоны (Pythonidae)',
-                    'Крокодиловые (Crocodylidae)',
-                    'Черепахи (Testudinidae)',
-                    'Настоящие лягушки (Ranidae)',
-                    'Жабы (Bufonidae)',
-                    'Квакши (Hylidae)',
-                    'Саламандры (Salamandridae)',
-                    'Безлёгочные саламандры (Plethodontidae)',
-                    'Червяги (Caeciliidae)',
-                    'Брюхоногие (Gastropoda)',
-                    'Ракообразные (Crustacea)',
-                    'Кольчатые черви (Annelida)'
+                    'Крокодиловые (Crocodylidae)', 'Варановые (Varanidae)', 'Гекконовые (Gekkonidae)',
+                    'Агамовые (Agamidae)', 'Гадюковые (Viperidae)', 'Ужеобразные (Colubridae)',
+                    'Питонные (Pythonidae)', 'Черепахи (Testudinidae)',
+                    'Брюхоногие (Gastropoda)', 'Ракообразные (Crustacea)'
                 ],
                 insect: [
                     'Жесткокрылые (жуки) (Coleoptera)',
                     'Чешуекрылые (бабочки) (Lepidoptera)',
                     'Паукообразные (Arachnida)',
+                    'Богомоловые (Mantodea)',
                     'Перепончатокрылые (Hymenoptera)',
-                    'Двукрылые (Diptera)',
-                    'Прямокрылые (Orthoptera)',
-                    'Стрекозы (Odonata)',
-                    'Скорпионы (Scorpiones)'
+                    'Прямокрылые (Orthoptera)'
                 ]
             },
             east_asia: {
@@ -2042,13 +1834,7 @@
                     'Кошачьи (Felidae)', 'Псовые (Canidae)', 'Куньи (Mustelidae)',
                     'Виверровые (Viverridae)', 'Землеройковые (Soricidae)',
                     'Ежовые (Erinaceidae)', 'Мышиные (Muridae)', 'Беличьи (Sciuridae)',
-                    'Зайцевые (Leporidae)', 'Свиные (Suidae)', 'Панголины (Manidae)',
-                    'Рукокрылые (Chiroptera)',
-                    'Малые панды (Ailuridae)',
-                    'Тушканчиковые (Dipodidae)',
-                    'Песчанковые (Gerbillinae)',
-                    'Лошадиные (Equidae)',
-                    'Верблюдовые (Camelidae)'
+                    'Зайцевые (Leporidae)', 'Свиные (Suidae)', 'Панголины (Manidae)'
                 ],
                 bird: [
                     'Врановые (Corvidae)', 'Воробьиные (Passeridae)',
@@ -2093,75 +1879,37 @@
                 insect: [
                     'Жесткокрылые (жуки) (Coleoptera)',
                     'Чешуекрылые (бабочки) (Lepidoptera)',
-                    'Паукообразные (Arachnida)',
-                    'Перепончатокрылые (Hymenoptera)',
-                    'Двукрылые (Diptera)',
-                    'Прямокрылые (Orthoptera)',
-                    'Стрекозы (Odonata)',
-                    'Скорпионы (Scorpiones)'
+                    'Паукообразные (Arachnida)'
                 ]
             },
             southeast_asia: {
                 mammal: [
-                    'Оленевые (Cervidae)', 'Полорогие (Bovidae)', 'Медвежьи (Ursidae)',
-                    'Кошачьи (Felidae)', 'Псовые (Canidae)', 'Куньи (Mustelidae)',
-                    'Виверровые (Viverridae)', 'Землеройковые (Soricidae)',
-                    'Ежовые (Erinaceidae)', 'Мышиные (Muridae)', 'Беличьи (Sciuridae)',
-                    'Зайцевые (Leporidae)', 'Свиные (Suidae)', 'Слоновые (Elephantidae)',
-                    'Рукокрылые (Chiroptera)',
-                    'Мартышковые (Cercopithecidae)',
-                    'Приматы (Cebidae / Atelidae)',
-                    'Панголины (Manidae)',
-                    'Тапировые (Tapiridae)'
+                    'Кошачьи (Felidae)', 'Виверровые (Viverridae)', 'Куньи (Mustelidae)',
+                    'Слоновые (Elephantidae)', 'Носороговые (Rhinocerotidae)', 'Свиные (Suidae)',
+                    'Полорогие (Bovidae)', 'Оленевые (Cervidae)', 'Рукокрылые (Chiroptera)',
+                    'Панголины (Manidae)', 'Беличьи (Sciuridae)', 'Мышиные (Muridae)'
                 ],
                 bird: [
-                    'Врановые (Corvidae)', 'Воробьиные (Passeridae)',
-                    'Славковые (Sylviidae)', 'Кукушковые (Cuculidae)',
-                    'Голубиные (Columbidae)', 'Ястребиные (Accipitridae)',
-                    'Утиные (Anatidae)', 'Совиные (Strigidae)',
-                    'Дятловые (Picidae)', 'Жаворонковые (Alaudidae)',
-                    'Ласточковые (Hirundinidae)', 'Дроздовые (Turdidae)',
-                    'Синицевые (Paridae)', 'Скворцовые (Sturnidae)',
-                    'Вьюрковые (Fringillidae)', 'Фазановые (Phasianidae)',
-                    'Птицы-носороги (Bucerotidae)'
+                    'Птицы-носороги (Bucerotidae)', 'Фазановые (Phasianidae)', 'Ястребиные (Accipitridae)',
+                    'Совиные (Strigidae)', 'Зимородковые (Alcedinidae)', 'Голубиные (Columbidae)',
+                    'Скворцовые (Sturnidae)', 'Цаплевые (Ardeidae)', 'Баклановые (Phalacrocoracidae)'
                 ],
                 fish: [
-                    'Карповые (Cyprinidae)', 'Сомовые (Siluridae)',
-                    'Цихловые (Cichlidae)', 'Харациновые (Characidae)',
-                    'Аравановые (Osteoglossidae)',
-                    'Макрелевые (Scombridae)', 'Сельдевые (Clupeidae)',
-                    'Акульи (Carcharhinidae)', 'Скаты (Dasyatidae)'
+                    'Карповые (Cyprinidae)', 'Сомовые (Siluridae)'
                 ],
                 reptile_amphibian: [
-                    'Настоящие ящерицы (Lacertidae)',
-                    'Гекконовые (Gekkonidae)',
-                    'Агамы (Agamidae)',
-                    'Вараны (Varanidae)',
-                    'Сцинковые (Scincidae)',
-                    'Ужеобразные (Colubridae)',
-                    'Гадюковые (Viperidae)',
-                    'Питоны (Pythonidae)',
-                    'Крокодиловые (Crocodylidae)',
-                    'Черепахи (Testudinidae)',
-                    'Настоящие лягушки (Ranidae)',
-                    'Жабы (Bufonidae)',
-                    'Квакши (Hylidae)',
-                    'Саламандры (Salamandridae)',
-                    'Безлёгочные саламандры (Plethodontidae)',
-                    'Червяги (Caeciliidae)',
-                    'Брюхоногие (Gastropoda)',
-                    'Ракообразные (Crustacea)',
-                    'Кольчатые черви (Annelida)'
+                    'Крокодиловые (Crocodylidae)', 'Варановые (Varanidae)', 'Гекконовые (Gekkonidae)',
+                    'Агамовые (Agamidae)', 'Питонные (Pythonidae)', 'Гадюковые (Viperidae)',
+                    'Ужеобразные (Colubridae)', 'Черепахи (Testudinidae)',
+                    'Брюхоногие (Gastropoda)', 'Ракообразные (Crustacea)'
                 ],
                 insect: [
                     'Жесткокрылые (жуки) (Coleoptera)',
                     'Чешуекрылые (бабочки) (Lepidoptera)',
                     'Паукообразные (Arachnida)',
-                    'Перепончатокрылые (Hymenoptera)',
-                    'Двукрылые (Diptera)',
-                    'Прямокрылые (Orthoptera)',
-                    'Стрекозы (Odonata)',
-                    'Скорпионы (Scorpiones)'
+                    'Богомоловые (Mantodea)',
+                    'Палочники (Phasmatodea)',
+                    'Перепончатокрылые (Hymenoptera)'
                 ]
             },
             oceania: {
@@ -2171,9 +1919,7 @@
                     'Сумчатые кроты (Notoryctidae)', 'Утконосовые (Ornithorhynchidae)',
                     'Ехидновые (Tachyglossidae)', 'Нумбаты (Myrmecobiidae)',
                     'Бандикуты (Peramelidae)', 'Бильби (Thylacomyidae)',
-                    'Квокки (Setonix)', 'Летучие лисицы (Pteropodidae)',
-                    'Рукокрылые (Pteropodidae)',
-                    'Сумчатые куницы (Dasyuridae)'
+                    'Квокки (Setonix)', 'Летучие лисицы (Pteropodidae)'
                 ],
                 bird: [
                     'Эму (Dromaiidae)', 'Лирохвосты (Menuridae)',
@@ -2192,26 +1938,17 @@
                     'Крокодиловые (Crocodylidae)',
                     'Черепахи (Testudinidae)',
                     'Брюхоногие (Gastropoda)',
-                    'Ракообразные (Crustacea)',
-                    'Кольчатые черви (Annelida)'
+                    'Ракообразные (Crustacea)'
                 ],
                 insect: [
                     'Жесткокрылые (жуки) (Coleoptera)',
                     'Чешуекрылые (бабочки) (Lepidoptera)',
-                    'Паукообразные (Arachnida)',
-                    'Перепончатокрылые (Hymenoptera)',
-                    'Двукрылые (Diptera)',
-                    'Прямокрылые (Orthoptera)',
-                    'Стрекозы (Odonata)',
-                    'Скорпионы (Scorpiones)'
+                    'Паукообразные (Arachnida)'
                 ]
             },
             madagascar: {
                 mammal: [
-                    'Лемуровые (Lemuridae)', 'Мадагаскарские хищники (Eupleridae)',
-                    'Тенрековые (Tenrecidae)',
-                    'Рукокрылые (Chiroptera)',
-                    'Грызуны Мадагаскара (Nesomyidae)'
+                    'Лемуровые (Lemuridae)', 'Мадагаскарские хищники (Eupleridae)'
                 ],
                 bird: [
                     'Мадагаскарские пастушки (Mesitornithidae)',
@@ -2233,12 +1970,7 @@
                 insect: [
                     'Жесткокрылые (жуки) (Coleoptera)',
                     'Чешуекрылые (бабочки) (Lepidoptera)',
-                    'Паукообразные (Arachnida)',
-                    'Перепончатокрылые (Hymenoptera)',
-                    'Двукрылые (Diptera)',
-                    'Прямокрылые (Orthoptera)',
-                    'Стрекозы (Odonata)',
-                    'Скорпионы (Scorpiones)'
+                    'Паукообразные (Arachnida)'
                 ]
             },
             galapagos: {
@@ -2254,19 +1986,9 @@
                     'Сухопутные игуаны (Iguanidae)',
                     'Галапагосские черепахи (Testudinidae)',
                     'Брюхоногие (Gastropoda)',
-                    'Ракообразные (Crustacea)',
-                    'Кольчатые черви (Annelida)'
+                    'Ракообразные (Crustacea)'
                 ],
-                insect: [
-                    'Жесткокрылые (жуки) (Coleoptera)',
-                    'Чешуекрылые (бабочки) (Lepidoptera)',
-                    'Паукообразные (Arachnida)',
-                    'Перепончатокрылые (Hymenoptera)',
-                    'Двукрылые (Diptera)',
-                    'Прямокрылые (Orthoptera)',
-                    'Стрекозы (Odonata)',
-                    'Скорпионы (Scorpiones)'
-                ]
+                insect: []
             }
         };
 
@@ -2490,6 +2212,13 @@
             return selected;
         }
 
+        function isFamilyAllowedForLocation(family, location, region) {
+            if (region === 'europe' && SOUTHERN_ONLY_IN_EUROPE.has(family) && NORTHERN_EUROPE_LOCATIONS.has(location)) {
+                return false;
+            }
+            return true;
+        }
+
         function getRandomFamily(location, rarityKey, hasGiantGift = false, hasSmallGift = false) {
             const region = getRegionFromLocation(location);
             const activeClasses = getActiveClasses();
@@ -2518,7 +2247,7 @@
                             const list = FAMILIES_BY_REGION[r][cls];
                             if (!list) continue;
                             for (const family of list) {
-                                if (targetSet.has(family)) pool.push(family);
+                                if (targetSet.has(family) && isFamilyAllowedForLocation(family, location, r)) pool.push(family);
                             }
                         }
                         if (useActiveClassesOnly && activeClasses.includes('fish') && FAMILIES_BY_REGION[r].reptile_amphibian) {
@@ -2551,6 +2280,7 @@
                             for (const family of FAMILIES_BY_REGION[r][classKey]) {
                                 if (!hasGiantGift && GIANT_FAMILIES.has(family)) continue;
                                 if (hasSmallGift && !SMALL_FAMILIES.has(family)) continue;
+                                if (!isFamilyAllowedForLocation(family, location, r)) continue;
                                 allFamilies.push(family);
                             }
                         }
@@ -2577,6 +2307,7 @@
                         for (const family of FAMILIES_BY_REGION[r][cls]) {
                             if (!hasGiantGift && GIANT_FAMILIES.has(family)) continue;
                             if (hasSmallGift && !SMALL_FAMILIES.has(family)) continue;
+                            if (!isFamilyAllowedForLocation(family, location, r)) continue;
                             families.push(family);
                         }
                     }
@@ -2723,11 +2454,7 @@
                 );
             }
 
-            // РЕГИОНАЛЬНЫЕ ПРИМЕТЫ — ТОЛЬКО ДЛЯ ЭКЗОТИЧЕСКИХ РЕДКОСТЕЙ И ЭКЗОТИЧЕСКИХ ЛОКАЦИЙ
-            const exoticRarities = ['exotic', 'gifted_exotic', 'exotic_beast'];
-            const isExoticLocation = LOCATIONS.exotic.includes(location) || LOCATIONS.isolated.includes(location);
-            
-            if (exoticRarities.includes(rarityKey) && isExoticLocation && LOCATION_MARKINGS[location]) {
+            if (LOCATION_MARKINGS[location]) {
                 availableMarkings = [...availableMarkings, ...LOCATION_MARKINGS[location]];
             }
 
@@ -2778,115 +2505,110 @@
         }
 
         // ================================================================
-        //  ИСТОРИЯ
+        //  ГЕНЕРАЦИЯ ПЕРСОНАЖА
         // ================================================================
 
-        function getHistory() {
-            try {
-                const raw = localStorage.getItem('lycan_history');
-                if (!raw) return [];
-                const parsed = JSON.parse(raw);
-                return Array.isArray(parsed) ? parsed : [];
-            } catch (e) {
-                console.warn('Не удалось прочитать историю:', e);
-                return [];
-            }
-        }
+        function generateLycan(rarityKey, activeFilters) {
+            const meta = RARITY_META[rarityKey];
+            if (!meta) return null;
 
-        function saveHistory(history) {
-            try {
-                localStorage.setItem('lycan_history', JSON.stringify(history));
-            } catch (e) {
-                console.warn('Не удалось сохранить историю:', e);
-            }
-        }
+            let pool;
+            let location;
 
-        function addToHistory(charData) {
-            const history = getHistory();
-            const entry = {
-                id: Date.now().toString(),
-                timestamp: Date.now(),
-                ...charData
-            };
-            history.unshift(entry);
-            if (history.length > CONFIG.MAX_HISTORY) {
-                history.length = CONFIG.MAX_HISTORY;
+            if (rarityKey === 'exotic_beast' && rand() < 0.1) {
+                location = randomItem(LOCATIONS.isolated);
+            } else {
+                pool = (meta.loc === 'all') ? LOCATIONS.all : LOCATIONS[meta.loc];
+                location = randomItem(pool);
             }
-            saveHistory(history);
-            renderHistory();
-        }
 
-        function clearHistory() {
-            if (confirm('Очистить всю историю генераций?')) {
-                saveHistory([]);
-                renderHistory();
+            let hasGiantGift = false;
+            let hasSmallGift = false;
+            let giftData = null;
+
+            // ❌ Химеры НЕ ДОСТУПНЫ для beast и exotic_beast
+            let willBeChimera = false;
+            if (rarityKey !== 'beast' && rarityKey !== 'exotic_beast') {
+                willBeChimera = rand() < CONFIG.CHIMERA_CHANCE;
             }
-        }
 
-        function loadHistoryEntry(id) {
-            const history = getHistory();
-            const entry = history.find(h => h.id === id);
-            if (entry) {
-                const result = {
-                    rarity: entry.rarity,
-                    rarityKey: entry.rarityKey,
-                    location: entry.location,
-                    form: entry.form,
-                    gift: entry.gift,
-                    status: entry.status,
-                    palette: entry.palette,
-                    markings: entry.markings,
-                    hasGiantGift: entry.hasGiantGift,
-                    hasSmallGift: entry.hasSmallGift,
-                    isChimera: entry.isChimera,
-                    chimeraData: entry.chimeraData
-                };
-                render(result, entry.rarityKey);
-                document.getElementById('resultBlock').dataset.favId = '';
-                // Проверяем, сохранён ли в избранное
-                const favId = document.getElementById('resultBlock').dataset.favId;
-                if (favId && isFavorite(favId)) {
-                    updateFavoriteButton(true);
-                } else {
-                    updateFavoriteButton(false);
+            if (!willBeChimera) {
+                giftData = getGiftOrCorruption(rarityKey, true, true);
+            } else {
+                giftData = getGiftOrCorruption(rarityKey, false, false);
+            }
+
+            if (giftData && giftData.type === 'Дар') {
+                if (giftData.text === 'Принимает облик, чей размер меньше или больше нормы') {
+                    if (rand() < 0.5) {
+                        hasSmallGift = true;
+                    } else {
+                        hasGiantGift = true;
+                    }
                 }
-                document.getElementById('resultBlock').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-        }
 
-        function renderHistory() {
-            const history = getHistory();
-            const container = document.getElementById('historyList');
-            const section = document.getElementById('historySection');
-            
-            if (history.length === 0) {
-                section.classList.add('hidden');
-                return;
+            let form = '';
+            let isChimera = false;
+            let chimeraData = null;
+
+            if (willBeChimera) {
+                isChimera = true;
+                chimeraData = generateChimera(location, rarityKey, hasGiantGift, hasSmallGift, giftData);
+                form = chimeraData.parts.join(' + ');
+            } else {
+                form = getRandomFamily(location, rarityKey, hasGiantGift, hasSmallGift);
             }
-            
-            section.classList.remove('hidden');
-            container.innerHTML = history.map(entry => {
-                const time = new Date(entry.timestamp);
-                const timeStr = time.toLocaleString('ru-RU', { 
-                    day: '2-digit', month: '2-digit', year: 'numeric',
-                    hour: '2-digit', minute: '2-digit'
-                });
-                return `
-                    <div class="history-item" data-id="${entry.id}">
-                        <div class="h-info">
-                            <span class="h-rarity">${entry.rarity}</span>
-                            <span class="h-desc">${entry.location} • ${entry.form}</span>
-                        </div>
-                        <span class="h-time">${timeStr}</span>
-                    </div>
-                `;
-            }).join('');
 
-            container.querySelectorAll('.history-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    loadHistoryEntry(item.dataset.id);
-                });
-            });
+            function formMatchesSize(formStr, sizeSet) {
+                if (!formStr || formStr === 'Отсутствует') return false;
+                const parts = formStr.split(' + ').map(p => p.trim());
+                return parts.some(p => sizeSet.has(p));
+            }
+
+            if (hasGiantGift && !formMatchesSize(form, GIANT_FAMILIES)) {
+                hasGiantGift = false;
+                const newGift = getGiftOrCorruption(rarityKey, true, true);
+                giftData = newGift || null;
+            }
+
+            if (hasSmallGift && !formMatchesSize(form, SMALL_FAMILIES)) {
+                hasSmallGift = false;
+                const newGift = getGiftOrCorruption(rarityKey, true, true);
+                giftData = newGift || null;
+            }
+
+            if (isChimera && chimeraData && (chimeraData.hasMixedSizes || chimeraData.isTriple) && meta.hasGift) {
+                giftData = { type: 'Дар', text: 'Уравновешивание размеров' };
+            }
+
+            const status = getStatus(location, rarityKey, meta, form);
+
+            if (status === 'Предводитель' && meta.hasGift) {
+                giftData = { type: 'Дар', text: 'Лорный дар: предводитель или избранный' };
+            }
+
+            if (status !== 'Предводитель' && giftData && giftData.text === 'Лорный дар: предводитель или избранный') {
+                giftData = null;
+            }
+
+            const palette = generatePalette(activeFilters);
+            const markings = generateMarkings(form, rarityKey, location);
+
+            return {
+                rarity: meta.label,
+                rarityKey: rarityKey,
+                location,
+                form,
+                gift: giftData,
+                status,
+                palette,
+                markings,
+                hasGiantGift,
+                hasSmallGift,
+                isChimera,
+                chimeraData
+            };
         }
 
         // ================================================================
@@ -3154,109 +2876,6 @@
         }
 
         // ================================================================
-        //  ГЕНЕРАЦИЯ ПЕРСОНАЖА (ОСНОВНАЯ)
-        // ================================================================
-
-        function generateLycan(rarityKey, activeFilters) {
-            const meta = RARITY_META[rarityKey];
-            if (!meta) return null;
-
-            let pool;
-            let location;
-
-            if (rarityKey === 'exotic_beast' && rand() < 0.1) {
-                location = randomItem(LOCATIONS.isolated);
-            } else {
-                pool = (meta.loc === 'all') ? LOCATIONS.all : LOCATIONS[meta.loc];
-                location = randomItem(pool);
-            }
-
-            let hasGiantGift = false;
-            let hasSmallGift = false;
-            let giftData = null;
-
-            const willBeChimera = rand() < CONFIG.CHIMERA_CHANCE;
-
-            if (!willBeChimera) {
-                giftData = getGiftOrCorruption(rarityKey, true, true);
-            } else {
-                giftData = getGiftOrCorruption(rarityKey, false, false);
-            }
-
-            if (giftData && giftData.type === 'Дар') {
-                if (giftData.text === 'Принимает облик, чей размер меньше или больше нормы') {
-                    if (rand() < 0.5) {
-                        hasSmallGift = true;
-                    } else {
-                        hasGiantGift = true;
-                    }
-                }
-            }
-
-            let form = '';
-            let isChimera = false;
-            let chimeraData = null;
-
-            if (willBeChimera) {
-                isChimera = true;
-                chimeraData = generateChimera(location, rarityKey, hasGiantGift, hasSmallGift, giftData);
-                form = chimeraData.parts.join(' + ');
-            } else {
-                form = getRandomFamily(location, rarityKey, hasGiantGift, hasSmallGift);
-            }
-
-            function formMatchesSize(formStr, sizeSet) {
-                if (!formStr || formStr === 'Отсутствует') return false;
-                const parts = formStr.split(' + ').map(p => p.trim());
-                return parts.some(p => sizeSet.has(p));
-            }
-
-            if (hasGiantGift && !formMatchesSize(form, GIANT_FAMILIES)) {
-                hasGiantGift = false;
-                const newGift = getGiftOrCorruption(rarityKey, true, true);
-                giftData = newGift || null;
-            }
-
-            if (hasSmallGift && !formMatchesSize(form, SMALL_FAMILIES)) {
-                hasSmallGift = false;
-                const newGift = getGiftOrCorruption(rarityKey, true, true);
-                giftData = newGift || null;
-            }
-
-            if (isChimera && chimeraData && (chimeraData.hasMixedSizes || chimeraData.isTriple) && meta.hasGift) {
-                giftData = { type: 'Дар', text: 'Уравновешивание размеров' };
-            }
-
-            const status = getStatus(location, rarityKey, meta, form);
-
-            if (status === 'Предводитель' && meta.hasGift) {
-                giftData = { type: 'Дар', text: 'Предводитель (обладает чертами своего облика)' };
-            }
-
-            if (status !== 'Предводитель' && giftData && giftData.text === 'Предводитель (обладает чертами своего облика)') {
-                giftData = null;
-            }
-
-            const palette = generatePalette(activeFilters);
-            const markings = generateMarkings(form, rarityKey, location);
-
-            return {
-                rarity: meta.label,
-                rarityKey: rarityKey,
-                location,
-                form,
-                gift: giftData,
-                status,
-                palette,
-                markings,
-                hasGiantGift,
-                hasSmallGift,
-                isChimera,
-                chimeraData
-            };
-        }
-
-        // ================================================================
         //  СОБЫТИЯ
         // ================================================================
 
@@ -3268,10 +2887,6 @@
             const result = generateLycan(key, filters);
             document.getElementById('resultBlock').dataset.favId = '';
             render(result, key);
-            // Добавляем в историю
-            if (result) {
-                addToHistory(result);
-            }
         });
 
         document.getElementById('favoriteBtn').addEventListener('click', function() {
@@ -3299,17 +2914,6 @@
         document.getElementById('favoritesToggle').addEventListener('click', function() {
             const list = document.getElementById('favoritesList');
             list.classList.toggle('hidden');
-        });
-
-        document.getElementById('historyToggle').addEventListener('click', function(e) {
-            if (e.target.classList.contains('history-clear-btn')) return;
-            const list = document.getElementById('historyList');
-            list.classList.toggle('hidden');
-        });
-
-        document.getElementById('clearHistoryBtn').addEventListener('click', function(e) {
-            e.stopPropagation();
-            clearHistory();
         });
 
         document.getElementById('guideToggle').addEventListener('click', function() {
@@ -3355,11 +2959,6 @@
             const result = generateLycan(key, filters);
             render(result, key);
             renderFavorites();
-            renderHistory();
-            // Добавляем в историю стартовую генерацию
-            if (result) {
-                addToHistory(result);
-            }
         });
     </script>
 </body>
